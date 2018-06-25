@@ -10,7 +10,8 @@ import org.apache.zookeeper.*;
 public class ZookeeperTest {
 	private ZooKeeper zk = null;
 	
-	private static final String PATH="/usr/local/zookeeper-3.4.11/data";
+	private static final String PATH="/root";
+//	private static final String PATH="/usr/local/zookeeper-3.4.11/data";
 
 	public ZookeeperTest(){
 		try {
@@ -34,16 +35,20 @@ public class ZookeeperTest {
 		try {
 
 			//创建一个节点root，数据是mydata,不进行ACL权限控制，节点为永久性的(即客户端shutdown了也不会消失)
-			if (null==zk.exists("/root",false))
-			{
-				zk.create("/root", "mydata".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+//			if (null==zk.exists("/root",false))
+//			{
+//				zk.create("/root", "mydata".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+//			}
+
+			if (null==zk.exists("/root",false)) {
+				zk.create( "/root", "childone".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 			}
 
 
 			//在root下面创建一个childone znode,数据为childone,不进行ACL权限控制，节点为永久性的
-			if (null==zk.exists("/root/childone",false)) {
-				zk.create( "/root/childone", "childone".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-			}
+//			if (null==zk.exists("/root/childone",false)) {
+//				zk.create( "/root/childone", "childone".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+//			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,12 +61,12 @@ public class ZookeeperTest {
 		try {
 
 			//取得/root/childone节点下的数据,返回byte[]
-			System.out.println(new String(zk.getData("/childone", true, null)));
+			System.out.println(new String(zk.getData(PATH+"/childone", true, null)));
 
 			//修改节点/root/childone下的数据，第三个参数为版本，如果是-1，那会无视被修改的数据版本，直接改掉
-			zk.setData("/childone","childonemodify2".getBytes(), -1);
+			zk.setData(PATH+"/childone","127.0.0.1:8080".getBytes(), -1);
 
-			System.out.println(new String(zk.getData("/childone", true, null)));
+			System.out.println(new String(zk.getData(PATH+"/childone", true, null)));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,9 +88,9 @@ public class ZookeeperTest {
 	public static void main(String[] args) {
 		try {
 			ZookeeperTest zkTest = new ZookeeperTest();
-//			zkTest.createNodes();
-			zkTest.updateNodes();
-			//zkTest.deleteNodes();
+			zkTest.createNodes();
+//			zkTest.updateNodes();
+//			zkTest.deleteNodes();
 
 			while(true){
 				Thread.sleep(1000);

@@ -57,8 +57,7 @@ public class ServiceRegistry {
 	//创建节点
 	private void createNode(ZooKeeper zk, String data) {
 		try {
-			byte[] bytes = data.getBytes();
-			String path = zk.create(Constant.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+			String path = zk.create(Constant.ZK_DATA_PATH, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 			LOGGER.debug("create zookeeper node ({} => {})", path, data);
 		} catch (KeeperException e) {
 			LOGGER.error("", e);

@@ -1,7 +1,6 @@
 package com.iot.client;
 
-import com.iot.codec.Decoder;
-import com.iot.codec.Encoder;
+import com.iot.codec.RpcCodec;
 import com.iot.model.RpcRequest;
 import com.iot.model.RpcResponse;
 import io.netty.bootstrap.Bootstrap;
@@ -55,9 +54,9 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {
 							channel.pipeline()
-//									.addLast(new RpcCodec(RpcRequest.class,RpcResponse.class))
-									.addLast(new Encoder(RpcRequest.class))
-									.addLast(new Decoder(RpcResponse.class))
+									.addLast(new RpcCodec(RpcRequest.class,RpcResponse.class))
+//									.addLast(new Encoder(RpcRequest.class))
+//									.addLast(new Decoder(RpcResponse.class))
 									.addLast(RpcClient.this);
 						}
 					})

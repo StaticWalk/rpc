@@ -27,12 +27,12 @@ public class ServiceDiscovery {
 	private CountDownLatch latch = new CountDownLatch(1);
 
 	private volatile List<String> serviceAddressList = new ArrayList();
+
 	// 注册中心的地址
 	private String registryAddress;
 
 	public ServiceDiscovery(String registryAddress) throws KeeperException {
 		this.registryAddress = registryAddress;
-
 		ZooKeeper zk = connectServer();
 		if (zk != null) {
 			watchNode(zk);

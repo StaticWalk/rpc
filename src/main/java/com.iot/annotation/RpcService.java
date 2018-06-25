@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  * Time:21:12
  */
 
-
 //不理解
 //此注解表示这是一个远程接口
 @Target({ElementType.TYPE})

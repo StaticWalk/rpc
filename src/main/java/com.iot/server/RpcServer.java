@@ -1,8 +1,7 @@
 package com.iot.server;
 
 import com.iot.annotation.RpcService;
-import com.iot.codec.Decoder;
-import com.iot.codec.Encoder;
+import com.iot.codec.RpcCodec;
 import com.iot.model.RpcRequest;
 import com.iot.model.RpcResponse;
 import com.iot.utils.ClassUtil;
@@ -44,6 +43,7 @@ public class RpcServer {
 	{
 		Properties properties = PropertiesUtil.loadProps("server-config.properties");
 		serverAddress = properties.getProperty("server.address");
+//		serverAddress = "127.0.0.1:8080";
 		servicePackage = properties.getProperty("server.servicePackage");
 		serviceRegistry = new ServiceRegistry(properties.getProperty("registry.address"));
 		getRpcService();
@@ -95,9 +95,9 @@ public class RpcServer {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {
 							channel.pipeline()
-//									.addLast(new RpcCodec(RpcRequest.class, RpcResponse.class))
-									.addLast(new Encoder(RpcRequest.class))
-									.addLast(new Decoder(RpcResponse.class))
+									.addLast(new RpcCodec(RpcResponse.class, RpcRequest.class))
+//									.addLast(new Encoder(RpcResponse.class))
+//									.addLast(new Decoder(RpcRequest.class))
 									.addLast(new ServerHandler(serviceMap));
 						}
 					})
