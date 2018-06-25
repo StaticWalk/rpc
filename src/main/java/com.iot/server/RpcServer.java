@@ -1,7 +1,8 @@
 package com.iot.server;
 
 import com.iot.annotation.RpcService;
-import com.iot.codec.RpcCodec;
+import com.iot.codec.Decoder;
+import com.iot.codec.Encoder;
 import com.iot.model.RpcRequest;
 import com.iot.model.RpcResponse;
 import com.iot.utils.ClassUtil;
@@ -94,7 +95,9 @@ public class RpcServer {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {
 							channel.pipeline()
-									.addLast(new RpcCodec(RpcRequest.class, RpcResponse.class))
+//									.addLast(new RpcCodec(RpcRequest.class, RpcResponse.class))
+									.addLast(new Encoder(RpcRequest.class))
+									.addLast(new Decoder(RpcResponse.class))
 									.addLast(new ServerHandler(serviceMap));
 						}
 					})
