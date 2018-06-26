@@ -34,5 +34,5 @@
    2.目前只在注册中心记录了服务提供方的地址，但是不能保证每个服务器上都提供了相同的服务。
 
 ## 示例
-  示例请参照 [**simple-rpc-example**](https://github.com/StaticWalk/simple-rpc-example)
+  示例请参照 [**rpc-display**](https://github.com/StaticWalk/rpc-display)
 
